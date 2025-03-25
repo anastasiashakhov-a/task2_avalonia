@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AircraftApp.ViewModels"
+        xmlns:conv="clr-namespace:AircraftApp.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AircraftApp.Views.MainWindow"
+        Title="Aircraft Control">
+
+    <Window.Resources>
+        <conv:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
+    </Window.Resources>
+
+    <StackPanel Margin="20" Spacing="10">
+        <TextBlock Text="Aircraft Control Panel" FontSize="20" HorizontalAlignment="Center"/>
+        
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Content="Create Airplane" Command="{Binding CreateAirplaneCommand}"/>
+            <Button Content="Create Helicopter" Command="{Binding CreateHelicopterCommand}"/>
+            <TextBlock Text="Runway Length (m):" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding RunwayLength}" Width="100"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="10" 
+                   IsVisible="{Binding SelectedAircraft, Converter={StaticResource ObjectToVisibilityConverter}}">
+            <Button Content="Take Off" Command="{Binding TakeOffCommand}"/>
+            <Button Content="Land" Command="{Binding LandCommand}"/>
+        </StackPanel>
+
+        <TextBox Text="{Binding FlightLog}" IsReadOnly="True" AcceptsReturn="True"
+            TextWrapping="Wrap" Height="300" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+    </StackPanel>
+</Window>
